@@ -28,7 +28,7 @@ def dowmloadPic(html, keyword, goodsId):
         except requests:
             print('other')
             continue
-        
+
         path = '../images/' + goodsId + '-' + keyword
         if not os.path.exists(path):
             os.makedirs(path)
@@ -43,20 +43,20 @@ def dowmloadPic(html, keyword, goodsId):
 
 
 if __name__ == '__main__':
-    mydb = mysql.connector.connect(
+    myDb = mysql.connector.connect(
         host="localhost",
         user="root",
         passwd="root",
         database="for_goods"
     )
 
-    mycursor = mydb.cursor()
+    myCursor = myDb.cursor()
 
-    mycursor.execute("SELECT goods_name,goods_id FROM ecs_goods where goods_id>34 order by goods_id asc")
+    myCursor.execute("SELECT goods_name,goods_id FROM ecs_goods where goods_id>34 order by goods_id asc")
 
-    myresult = mycursor.fetchall()
+    myResult = myCursor.fetchall()
 
-    for x in myresult:
+    for x in myResult:
         word = x[0].encode('utf-8')
         goodsId = str(x[1])
         print(word)
@@ -64,4 +64,4 @@ if __name__ == '__main__':
         url = 'http://image.baidu.com/search/flip?tn=baiduimage&ie=utf-8&word=' + word + '&ct=201326592&v=flip'
 
         result = requests.get(url)
-        dowmloadPic(result.text, word,goodsId )
+        dowmloadPic(result.text, word, goodsId)
